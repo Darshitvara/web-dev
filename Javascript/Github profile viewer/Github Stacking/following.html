@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="./css/style.css"> -->
+    <title>GitHub Stacking</title>
+    <style>
+        .user {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user>img {
+            width: 200px;
+            height: 200px;
+        }
+        .card-columns {
+            column-count: 6;
+            column-gap: 1.5rem;
+        }
+    
+        .card {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+        .user-following{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+    <div class="user my-5">
+        <!-- <img class=" user-img rounded-circle img-fluid" src="./images/1.jpg" alt="Title" /> -->
+        <!-- <h1 class="username text-white"> User Name</h1> -->
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="card-columns">
+ 
+                <!-- <div class="card text-white ">
+                    <img class="card-img-top" src="./images/2.jpg" alt="Title" />
+                    <div class="card-body">
+                        <h4 class="card-title text-dark text-center">Title</h4>
+                    </div>
+                </div>
+                 -->
+                
+                
+
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+<script >
+    // user details section
+    const user_container = document.querySelector(".user");
+
+    if (!sessionStorage.getItem("loggedIn")) {
+        window.location.href = "./index.html"
+    }
+
+
+// const userName = "DarshitVara"
+// const userName = "MercyShark"
+// const userImage = `https://avatars.githubusercontent.com/u/125804877?v=4`
+
+
+
+const userName = sessionStorage.getItem("userName")
+const userImage = sessionStorage.getItem("userAvatar")
+
+user_container.innerHTML += `<img class=" user-img rounded-circle img-fluid" src=${userImage} alt="Title" />`
+user_container.innerHTML += `<h1 class="username text-white"> ${userName}</h1>`
+
+// user following details section 
+const requestURL = `https://api.github.com/users/${userName}/following`
+const options ={
+    method : "GET"
+}
+
+
+fetchData(requestURL)
+
+async function fetchData(requestURL) {
+    try{
+        let response = await fetch(requestURL,options)
+        let responseText = await response.json()
+
+        // console.log(responseText)
+
+        ExtractData(responseText)
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+function ExtractData(response){
+    for(var key in response){
+        let userID = response[key].login
+        let userAvatar = response[key].avatar_url
+
+
+        displayData(userID,userAvatar)
+    }
+}   
+function displayData(userID,userAvatar){
+    const container = document.querySelector(".card-columns");
+    const user = document.querySelector(".username")
+
+    user.textContent = userName;
+
+    let userCard = `<div class="card text-white ">
+                <img class="card-img-top" src=${userAvatar} alt="Title" />
+                <div class="card-body">
+                    <h4 class="card-title text-dark text-center">${userID}</h4>
+                </div>
+            </div>`
+    
+    container.innerHTML += userCard;
+}
+</script>
+
+</html>

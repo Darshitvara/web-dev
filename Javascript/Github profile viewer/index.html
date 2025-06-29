@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
+    form {
+
+      overflow: hidden;
+      width: 450px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-inline: auto;
+      top: 30%;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      border-radius: 7px;
+      box-shadow: 0 0 30px -10px;
+      background: #fff;
+    }
+
+    form button {
+      background: #0056b3;
+      position: absolute;
+      border: none;
+      padding: 10px;
+      width: 25%;
+      color: #fff;
+      height: 100%;
+      font-size: 25px;
+      right: 0;
+      border-radius: 7px;
+      scale: .83;
+      transition: scale .3s ease;
+    }
+
+    form input {
+      width: 75%;
+      padding: 20px;
+      font-size: 25px;
+      outline: none;
+      border: none;
+    }
+
+    .progressbar {
+      position: absolute;
+      width: 100%;
+      bottom: -5px;
+      height: 5px;
+      background: #ddd;
+      transition: bottom .2s ease;
+    }
+
+    .progressbar .bar {
+      width: 0%;
+      height: 100%;
+      background: #051938;
+    }
+
+    .submitted {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      top: 100%;
+      left: 0;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      color: #0b0b0b;
+      transition: top .3s ease;
+    }
+
+    @keyframes push {
+
+      0%,
+      100% {
+        scale: 1;
+      }
+
+      50% {
+        scale: .95;
+      }
+    }
+
+    @keyframes scaleWidth {
+      0% {
+        width: 25%;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+
+    @keyframes scaleBar {
+      0% {
+        width: 0%;
+      }
+
+      100% {
+        width: 100%;
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0e6cc4;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    /*waves****************************/
+
+
+    .box {
+      position: fixed;
+      top: 0;
+      transform: rotate(80deg);
+      left: 0;
+    }
+
+    .wave {
+      position: fixed;
+      top: 0;
+      left: 0;
+      opacity: .4;
+      position: absolute;
+      top: 3%;
+      left: 10%;
+      background: #0af;
+      width: 1500px;
+      height: 1300px;
+      margin-left: -150px;
+      margin-top: -250px;
+      transform-origin: 80% 20%;
+      border-radius: 43%;
+      animation: drift 7000ms infinite linear;
+    }
+
+    .wave.-three {
+      animation: drift 7500ms infinite linear;
+      position: fixed;
+      background-color: #77daff;
+    }
+
+    .wave.-two {
+      animation: drift 3000ms infinite linear;
+      opacity: .1;
+      background: black;
+      position: fixed;
+    }
+
+    .box:after {
+      content: '';
+      display: block;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 11;
+      transform: translate3d(0, 0, 0);
+    }
+
+    @keyframes drift {
+      from {
+        transform: rotate(0deg);
+      }
+
+      from {
+        transform: rotate(360deg);
+      }
+    }
+
+    /*LOADING SPACE*/
+
+    .contain {
+      animation-delay: 4s;
+      z-index: 1000;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+
+      background: #25a7d7;
+      background: -webkit-linear-gradient(#25a7d7, #2962FF);
+      background: linear-gradient(#25a7d7, #25a7d7);
+    }
+
+    .icon {
+      width: 100px;
+      height: 100px;
+      margin: 0 5px;
+    }
+
+    /*Animation*/
+    .icon:nth-child(2) img {
+      -webkit-animation-delay: 0.2s;
+      animation-delay: 0.2s
+    }
+
+    .icon:nth-child(3) img {
+      -webkit-animation-delay: 0.3s;
+      animation-delay: 0.3s
+    }
+
+    .icon:nth-child(4) img {
+      -webkit-animation-delay: 0.4s;
+      animation-delay: 0.4s
+    }
+
+    .icon img {
+      -webkit-animation: anim 2s ease infinite;
+      animation: anim 2s ease infinite;
+      -webkit-transform: scale(0, 0) rotateZ(180deg);
+      transform: scale(0, 0) rotateZ(180deg);
+    }
+
+    @-webkit-keyframes anim {
+      0% {
+        -webkit-transform: scale(0, 0) rotateZ(-90deg);
+        transform: scale(0, 0) rotateZ(-90deg);
+        opacity: 0
+      }
+
+      30% {
+        -webkit-transform: scale(1, 1) rotateZ(0deg);
+        transform: scale(1, 1) rotateZ(0deg);
+        opacity: 1
+      }
+
+      50% {
+        -webkit-transform: scale(1, 1) rotateZ(0deg);
+        transform: scale(1, 1) rotateZ(0deg);
+        opacity: 1
+      }
+
+      80% {
+        -webkit-transform: scale(0, 0) rotateZ(90deg);
+        transform: scale(0, 0) rotateZ(90deg);
+        opacity: 0
+      }
+    }
+
+    @keyframes anim {
+      0% {
+        -webkit-transform: scale(0, 0) rotateZ(-90deg);
+        transform: scale(0, 0) rotateZ(-90deg);
+        opacity: 0
+      }
+
+      30% {
+        -webkit-transform: scale(1, 1) rotateZ(0deg);
+        transform: scale(1, 1) rotateZ(0deg);
+        opacity: 1
+      }
+
+      50% {
+        -webkit-transform: scale(1, 1) rotateZ(0deg);
+        transform: scale(1, 1) rotateZ(0deg);
+        opacity: 1
+      }
+
+      80% {
+        -webkit-transform: scale(0, 0) rotateZ(90deg);
+        transform: scale(0, 0) rotateZ(90deg);
+        opacity: 0
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class='box'>
+    <div class='wave -one'></div>
+    <div class='wave -two'></div>
+    <div class='wave -three'></div>
+  </div>
+
+  <form class="input">
+    <input type="text" id="userID" autofocus="true" required placeholder="DarshitVara">
+    <button id="submit">Submit</button>
+
+    <div class="progressbar">
+      <div class="bar"></div>
+    </div>
+
+    <div class="submitted">Submitted!</div>
+  </form>
+</body>
+<script>
+
+  // animation stuff
+
+  const form = document.querySelector('form')
+  const submitBtn = document.querySelector('form button')
+  const progressbar = document.querySelector('.progressbar')
+  const bar = document.querySelector('.progressbar .bar')
+  const submitted = document.querySelector('.submitted')
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+
+    form.style.animation = 'linear .3s push'
+
+    setTimeout(() => {
+      submitBtn.style.scale = '1'
+    }, 300)
+
+    setTimeout(() => {
+      submitBtn.style.animation = 'ease .5s scaleWidth'
+    }, 900)
+
+    setTimeout(() => {
+      progressbar.style.bottom = '0px'
+    }, 1200)
+
+    setTimeout(() => {
+      submitBtn.style.width = '100%'
+      bar.style.animation = 'ease .7s scaleBar'
+    }, 1390)
+
+    setTimeout(() => {
+      bar.style.width = '100%'
+      submitted.style.top = '0'
+    }, 2090)
+
+
+    // API data and request stuff
+    setTimeout(() => {
+      let userID = document.getElementById("userID").value
+
+      const requestUrl = "https://api.github.com/users/" + userID;
+      console.log(requestUrl)
+      const xhr = new XMLHttpRequest();
+
+      xhr.open("GET", requestUrl)
+
+      xhr.onreadystatechange = function () {
+          if(xhr.readyState === 4) {
+            const response = JSON.parse(this.responseText)
+
+            if (response.status === "404") {
+              document.location.href = './error.html'
+            }
+            else {
+              sessionStorage.setItem('loggedIn', 'true');
+              // Convert JSON object to a string and store it in local storage
+              localStorage.setItem('data', JSON.stringify(response));
+              document.location.href = './main.html'
+            }
+        }
+      }
+      xhr.send()
+
+    }, 2091)
+
+  })
+
+
+
+</script>
+
+</html>

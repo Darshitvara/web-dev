@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: #0c7903;
+            display: flex;
+            justify-content: center;
+        }
+        .gamebox{
+            text-align: center;
+            font-family: cursive;
+            color: white;
+            height: 10em;
+            width: 15em;
+            background-color: rgb(24, 58, 15);
+            border-radius: 0%;
+            font-size: 3em;
+            box-shadow: 30px 30px 80px rgb(0, 255, 0) , -30px -30px 80px rgb(0, 255, 47);
+        }
+        .area{
+            position: relative;
+            top: 2em;
+        }
+        .playbuttons{
+            font-family: cursive;
+            background-color: rgb(244, 239, 239);
+            height: 2em;
+            width: 7em;
+            overflow: hidden;
+            font-size: 20px;
+            border: 0px ;
+            box-shadow: 3px 3px 5px rgb(29, 46, 24), -3px -3px 5px rgb(29, 46, 24);
+            cursor: pointer;
+        }
+        .gameControls{
+            position: relative;
+            top: 28%;
+            
+        }
+        .resultArea{
+            margin-top: 40px;
+            color: white;
+        }
+        .playbuttons:hover{
+            transition: 0.70s;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="gamebox">
+        <div class="area">
+            <div class="playerArea">
+                <label > Player :</label>
+                <label id="playerChoice">none </label>
+            </div>
+            <div class="computerArea">
+                <label > Computer :</label>
+                <label id="computerChoice">none </label>
+            </div>
+            <div class="resultArea">
+                <label id="result">result</label>
+            </div>
+        </div>
+        <div class="gameControls">
+            <button class="playbuttons" id="button1">Rock</button>
+            <button class="playbuttons" id="button2">Paper</button>
+            <button class="playbuttons" id="button3">Sicssor</button>
+        </div>
+    </div>
+    
+    <script>
+        const playerChoice = document.querySelector("#playerChoice");
+        const computerChoice = document.querySelector("#computerChoice");
+        const result = document.querySelector("#result");
+        const playbuttons = document.querySelectorAll(".playbuttons");
+        let player;
+        let computer;
+
+
+        playbuttons.forEach(button => {
+            button.addEventListener("click",() => {
+                player = button.textContent;
+                computer = computerTurn();
+                
+                playerChoice.textContent = player;
+                computerChoice.textContent = computer;
+                result.textContent = checkWinner();
+                
+
+            })
+        });
+        function computerTurn(){
+            const randNum = Math.floor(Math.random()*3) +1;
+            switch(randNum){
+                case 1:
+                    return "Rock";
+                    break;
+                case 2:
+                    return "Paper";
+                    break;
+                case 3:
+                    return "Sicssor";
+                    break;
+            }
+        }
+        function checkWinner(){
+            if(computer ===  player){
+                    return "Draw..!";
+            }else if(computer === "Rock"){
+                return (player == "Paper") ?  "You Won..!" : "You Lose..!";
+            }else if(computer === "Paper"){
+                return (player == "Sicssor") ? "You Won..!" : "You Lose..!";
+            }else if(computer === "Sicssor"){
+                return (player == "Rock") ? "You Won..!" : "You Lose..!";
+            }
+        }
+    </script>
+</body>
+</html>

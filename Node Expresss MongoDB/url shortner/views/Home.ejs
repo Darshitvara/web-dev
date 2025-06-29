@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Hello from server..</h1>
+
+    <table>
+        <thead>
+            <th>Index </th>
+            <th> Short ID</th>
+            <th> Redirect URL</th>
+            <th> Clicks</th>
+        </thead>
+        <tbody>
+           
+            <% locals.allUrls.forEach((url,index) => { %>
+                 <tr> 
+                    <td> <%= index %></td>
+                    <td> <%=  url.shortId %></td>
+                    <td><%=  url.redirectURL %></td>
+                    <td><%=  url.visitHistory.length %></td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+
+    <h1> Create new Short url</h1>
+    <form action="/url" method="post">
+        <label for=""> ENTER YOUR URL : </label>
+        <input type="text" name="url" id=""  >
+        <input type="submit" >
+    </form>
+</body>
+</html>

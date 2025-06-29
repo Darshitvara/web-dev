@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="shuffle.css">
+</head>
+<body>
+    <h1 align="center">Shuffle Deck</h1>
+    <div class="button-class">
+    <button class="buttons" id="shuffleButton" >Shuffle </button>
+    <button class="buttons" id="resetButton">reset</button>
+</div>
+    <div class="cardDeck">
+        <div class="card" id="card0">A</div>
+        <div class="card" id="card1">2</div>
+        <div class="card" id="card2">3</div>
+        <div class="card" id="card3">4</div>
+        <div class="card" id="card4">5</div>
+        <div class="card" id="card5">6</div>
+        <div class="card" id="card6">7</div>
+        <div class="card" id="card7">8</div>
+        <div class="card" id="card8">9</div>
+        <div class="card" id="card9">10</div>
+        <div class="card" id="card10">J</div>
+        <div class="card" id="card11">Q</div>
+        <div class="card" id="card12">K</div>
+        <!-- <div class="card" id="card13">K</div> -->
+    </div>
+<script >
+    
+document.getElementById("shuffleButton").onclick = function(){
+    let  cards = ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
+
+    let lengthOfCards = cards.length
+    let random_index = 0
+    let current_index = lengthOfCards
+    let temp = 0
+    let idname = ""
+
+    while(current_index != 0){
+        random_index = Math.floor(Math.random()*lengthOfCards)
+        current_index-=1
+
+        temp = cards[current_index]
+        cards[current_index] = cards[random_index]
+        cards[random_index] = temp
+    }
+    // console.log(lengthOfCards)
+    for(let i = 0;i<lengthOfCards;i+=1){
+        idname= 'card' + i
+        document.getElementById(idname).innerHTML = cards[i]
+    }
+}
+document.getElementById("resetButton").onclick = function(){
+    let  cards = ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
+    let lengthOfCards = cards.length
+    let idname = ''
+    for(let i= 0;i<lengthOfCards;i+=1){
+        idname = "card" + i
+        document.getElementById(idname).innerHTML = cards[i]
+    }
+}
+</script>
+</body>
+</html>

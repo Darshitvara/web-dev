@@ -1,0 +1,48 @@
+*{
+    background-color: rgba(234, 226, 226, 0.918);
+}
+.container{
+    display: inline-block;
+    padding: 10px;
+}
+.container button{    
+    background-color: black;
+    font-size: medium;
+    color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+    
+}
+.menuitems{
+    background-color: rgba(154, 154, 154, 0.438);
+    padding: 5px;
+    height: 150px;
+    width: 100px;
+    display: none;
+    border-radius: 20px;
+}
+.menuitems a{
+    color: black;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+    padding: 10px 25px;
+    cursor: pointer;
+}
+
+.container button:hover + .menuitems{
+    display:block;
+}
+
+.menuitems a:hover{
+    border-radius: 20px;
+    background-color: rgb(237, 206, 169);
+    
+}
+p{
+    position: fixed;
+    top: 60px;
+}

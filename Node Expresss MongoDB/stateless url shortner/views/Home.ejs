@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Short URL Dashboard</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 3rem auto;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #222;
+      }
+
+      form {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      input[type="text"] {
+        padding: 0.8rem 1rem;
+        width: 100%;
+        max-width: 400px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border 0.3s ease;
+      }
+
+      input[type="text"]:focus {
+        border-color: #4f46e5;
+        outline: none;
+      }
+
+      input[type="submit"] {
+        padding: 0.8rem 1.5rem;
+        background-color: #4f46e5;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #4338ca;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5rem;
+      }
+
+      th,
+      td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+      }
+
+      tr:hover {
+        background-color: #f9f9f9;
+        transition: background-color 0.3s ease;
+      }
+
+      .short-url {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .copy-icon {
+        cursor: pointer;
+        color: #4f46e5;
+        font-size: 1.1rem;
+        transition: transform 0.2s ease;
+      }
+
+      .copy-icon:hover {
+        transform: scale(1.2);
+      }
+
+      .tooltip {
+        visibility: hidden;
+        background-color: #222;
+        color: #fff;
+        text-align: center;
+        padding: 4px 8px;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 1;
+        font-size: 0.8rem;
+      }
+
+      .copy-icon:hover + .tooltip {
+        visibility: visible;
+      }
+
+      @media (max-width: 600px) {
+        form {
+          flex-direction: column;
+        }
+
+        input[type="submit"] {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <% if(locals.status == "high") {%>
+    <script>
+      alert("Url generated successfully.. refresh the page.");
+    </script>
+    <%} %>
+    <div class="container">
+      <h1>🔗 Create New Short URL</h1>
+
+      <form action="/url" method="POST">
+        <input
+          type="text"
+          name="url"
+          placeholder="Enter your long URL"
+          required
+        />
+        <input type="submit" value="Generate" />
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Index</th>
+            <th>Short URL</th>
+            <th>Original URL</th>
+            <th>Clicks</th>
+            <th>Action</th>
+            <!-- New column -->
+          </tr>
+        </thead>
+
+        <tbody>
+                    <% locals.allUrls.forEach((url, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td>
+              <div class="short-url">
+                <a
+                  href="http://localhost:8001/url/<%= url.shortId %>"
+                  target="_blank"
+                >
+                 <%= url.shortId %>
+                </a>
+                <span
+                  class="copy-icon"
+                  onclick="copyToClipboard('<%= url.shortId %>')"
+                  >📋</span
+                >
+              </div>
+            </td>
+            <td id="url-text-<%= url._id %>">
+              <span><%= url.redirectURL %></span>
+            </td>
+            <td><%= url.visitHistory.length %></td>
+            <td>
+              <!-- Edit button triggers inline form display -->
+              <button
+                onclick="showEditForm('<%= url._id %>', '<%= url.redirectURL %>')"
+                style="
+                  background-color: #3b82f6;
+                  color: white;
+                  border: none;
+                  padding: 0.4rem 0.8rem;
+                  border-radius: 6px;
+                  cursor: pointer;
+                "
+              >
+                Edit
+              </button>
+
+              <!-- Delete Form -->
+              <form
+                action="/url/delete/<%= url._id %>"
+                method="POST"
+                style="display: inline"
+                onsubmit="return confirm('Delete this URL?')"
+              >
+                <button
+                  type="submit"
+                  style="
+                    background-color: #dc2626;
+                    color: white;
+                    border: none;
+                    padding: 0.4rem 0.8rem;
+                    border-radius: 6px;
+                    cursor: pointer;
+                  "
+                >
+                  Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+
+          <!-- Inline hidden edit form -->
+          <tr id="edit-row-<%= url._id %>" style="display: none">
+            <td colspan="5">
+              <form
+                action="/url/edit/<%= url._id %>"
+                method="POST"
+                style="display: flex; gap: 1rem; align-items: center"
+              >
+                <input
+                  type="text"
+                  name="newUrl"
+                  value="<%= url.redirectURL %>"
+                  required
+                  style="
+                    flex: 1;
+                    padding: 0.5rem;
+                    border-radius: 6px;
+                    border: 1px solid #ccc;
+                  "
+                />
+                <button
+                  type="submit"
+                  style="
+                    padding: 0.5rem 1rem;
+                    background-color: #10b981;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                  "
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onclick="hideEditForm('<%= url._id %>')"
+                  style="
+                    padding: 0.5rem 1rem;
+                    background-color: #9ca3af;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                  "
+                >
+                  Cancel
+                </button>
+              </form>
+            </td>
+          </tr>
+                    <% }) %>
+
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      function copyToClipboard(shortId) {
+        const fullUrl = `http://localhost:8001/url/${shortId}`;
+        navigator.clipboard
+          .writeText(fullUrl)
+          .then(() => {
+            alert("Short URL copied to clipboard!");
+          })
+          .catch((err) => {
+            console.error("Failed to copy:", err);
+          });
+      }
+      function showEditForm(id, currentUrl) {
+    document.getElementById(`edit-row-${id}`).style.display = 'table-row';
+  }
+
+  function hideEditForm(id) {
+    document.getElementById(`edit-row-${id}`).style.display = 'none';
+  }
+    </script>
+  </body>
+</html>

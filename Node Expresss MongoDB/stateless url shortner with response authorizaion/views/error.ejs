@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Error</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .error-container {
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.1);
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .error-code {
+      font-size: 5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .error-message {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn-home {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.7rem 1.5rem;
+      background-color: white;
+      color: #dc2626;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-home:hover {
+      background-color: #fef2f2;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-code"> 402</div>
+    <div class="error-message"> "Invalid Creadentials"</div>
+
+    <a href="/user/login" class="btn-home">Login</a>
+  </div>
+</body>
+</html>

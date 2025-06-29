@@ -1,0 +1,65 @@
+[
+  {
+    "user_id": 1,
+    "username": "eguile0",
+    "email": "ssilverstone0@jigsy.com",
+    "password": "qX9>aA`OLa+Y",
+    "date_of_birth": "9/6/1996",
+    "gender": "non-binary"
+  },
+  {
+    "user_id": 2,
+    "username": "aharper1",
+    "email": "airnys1@samsung.com",
+    "password": "tH9{&{Uv",
+    "date_of_birth": "11/9/2000",
+    "gender": "female"
+  },
+  {
+    "user_id": 3,
+    "username": "lphillput2",
+    "email": "bparadis2@dailymail.co.uk",
+    "password": "aW1=M=b07r'|n",
+    "date_of_birth": "5/15/1983",
+    "gender": "female"
+  },
+  {
+    "user_id": 4,
+    "username": "ejessop3",
+    "email": "cpinor3@theatlantic.com",
+    "password": "zV3\\bZi\"|C8ghNE",
+    "date_of_birth": "8/23/1974",
+    "gender": "non-binary"
+  },
+  {
+    "user_id": 5,
+    "username": "lmattheis4",
+    "email": "olowery4@arstechnica.com",
+    "password": "kI8&mgd'wL'p*d",
+    "date_of_birth": "5/24/1971",
+    "gender": "female"
+  },
+  {
+    "user_id": 6,
+    "username": "nullock5",
+    "email": "baxcell5@weibo.com",
+    "password": "jF1>\"LVkUq\"",
+    "date_of_birth": "8/14/1991",
+    "gender": "male"
+  },
+  {
+    "user_id": 7,
+    "username": "fgodly6",
+    "email": "lchatteris6@cnbc.com",
+    "password": "jO7/6r>\\ZqWrm*1$",
+    "date_of_birth": "6/29/1973",
+    "gender": "non-binary"
+  },
+  {
+    "user_id": 8,
+    "username": "DarshitVara",
+    "email": "dv@gmail.com",
+    "password": "Darshit@1234",
+    "date_of_birth": "19/12/2004"
+  }
+]

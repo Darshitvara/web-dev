@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice game</title>
+    <link rel="stylesheet" href="luck.css">
+</head>
+
+<body>
+    <h1 style="text-align: center;"> Number Guessing Game</h1>
+
+    <div class="dicespace">
+        <div id="dicespace1"> 0 </div>
+        <div id="dicespace2">? </div>
+    </div>
+    <div class="displayContent">
+        <label> Guess the number : </lable>
+            <input type="number" id="guessedNo">
+            <button id="btn" onclick="gameOn">submit</button>
+            <button id="resetbtn" onclick="resetGame">reset</button>
+            <h2 id="msg">Guess It...</h2>
+    </div>
+
+    
+    <script >
+        
+let number = Math.ceil(((Math.random() * 100)));
+// let number = 20;
+let guessedNo = 0;
+let counter = 0;
+document.getElementById("resetbtn").onclick = function(){
+    guessedNo = 0;
+    counter = 0;
+    number =  Math.ceil(((Math.random() * 100)));
+    document.getElementById("dicespace1").innerHTML = String(guessedNo);
+    document.getElementById("dicespace2").innerHTML = String("?");
+    document.getElementById("guessedNo").value = null
+    document.getElementById("msg").innerHTML = "Guess It..."
+}
+document.getElementById("btn").onclick = function(){
+    guessedNo = Number(document.getElementById("guessedNo").value) ;
+    document.getElementById("dicespace1").innerHTML = String(guessedNo);
+    counter++;
+    if(guessedNo == number){
+        document.getElementById("msg").innerHTML = "Congratulations..."+ " Guessed in " + String(counter) + " attempts.."
+        document.getElementById("dicespace2").innerHTML = String(guessedNo);
+    }
+    else if(guessedNo < number){
+        document.getElementById("msg").innerHTML = "Try again darling..go higher.."
+    }
+    else{
+        document.getElementById("msg").innerHTML = "Try again darling..go lower.."
+    }
+}
+    </script>
+</body>
+
+</html>

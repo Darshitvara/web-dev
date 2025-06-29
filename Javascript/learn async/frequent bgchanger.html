@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0% ;
+        padding: 0;
+    }
+    nav{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background-color: black;
+        height: 10vh;
+        margin-top: 5%;
+    }
+    button{
+        height: 7vh;
+        /* width: 15wh; */
+        padding: 3px;
+        border-radius: 8px;
+        border : 0px solid ;
+        box-shadow: 2px 2px 5px white;
+        background-color: white;
+        text-align: center;
+        font-size: 2em;
+        font-weight: 600;
+        font-family: cursive;
+        color: black;
+        cursor: pointer;
+    }
+
+</style>
+<body>
+    
+    <nav>
+    <button id="button1">
+        Start
+    </button>
+    <button id="button2">
+        Stop
+    </button>
+</nav>
+</body>
+
+<script>
+    let intervalId
+    function randomColor(){
+        const colorRange = "0123456789abcdef"
+        let color = "#"
+        for(let i = 0;i<6;i++){
+            color += colorRange[Math.floor(Math.random() * 16)]
+        }
+        return color
+    }
+    document.querySelector("#button1").addEventListener("click",()=>{ 
+        if(!intervalId){
+            intervalId = setInterval(changeColor,100)
+        }
+        function changeColor(){
+            document.body.style.backgroundColor = randomColor()
+            console.log(randomColor());
+            
+        }
+    })
+    document.querySelector("#button2").addEventListener("click",()=>{
+        clearInterval(intervalId)
+        intervalId = null
+    })
+</script>
+</html>

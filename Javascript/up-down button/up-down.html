@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            background-color: grey;
+        }
+        .h1element{
+            display: flex;
+            justify-content: center;
+        }
+        .btn {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            background-color: rgb(0, 0, 0);
+            padding: 50px;
+            font-size: 50px;
+            justify-content: space-evenly;
+        }
+        .btn button{
+            width: 200px;
+            height: 70px;
+            background: white;
+            font-size: large;
+            border-radius: 40px;
+        }
+
+        h1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            width: 200px;
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+   <div class="h1element">
+        <h1 id="number">
+            0
+        </h1></div>
+        <div class="btn">
+            <button id="btn1">Increase</button>
+            <button id="btn2">reset</button>
+            <button id="btn3">Decrease</button>
+        </div>
+  
+    <script >
+        
+// Up-down buttons
+
+let counter = 0;
+
+document.getElementById("btn1").onclick = function() {
+    counter++;
+    document.getElementById("number").innerHTML = String(counter);
+}
+
+document.getElementById("btn2").onclick = function() {
+    counter = 0;
+    document.getElementById("number").innerHTML = String(counter);
+}
+
+document.getElementById("btn3").onclick = function() {
+    counter--;
+    document.getElementById("number").innerHTML = String(counter);
+}
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: cursive;
+            background-color: rgb(5, 0, 60);
+            text-align: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            min-height: 100vh;
+        }
+        .gameTitle{
+            margin-bottom: 20px;
+            z-index: 1;
+        }
+        .cellContainer{
+            background-color: rgb(119, 119, 162);
+            /* text-align: center; */
+            width:350px;
+            height: 350px;
+            gap:10px;
+            min-width: fit-content;
+            min-height: fit-content;
+            max-width: 350px;
+            display: grid;
+            grid-template-columns: repeat(3,auto);
+            margin : auto;
+            box-sizing: border-box;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow:   20px 20px 150px rgb(27, 27, 255), -10px -10px 150px rgb(0, 0, 178);
+            /* margin-top: 50px; */
+
+        }
+        .cell:active{
+            transform: scale(0.8);
+        }
+        .cell{
+            transition: 0.3s ;
+            box-shadow:   5px 5px 10px rgb(5, 5, 58),inset 3px 3px 30px rgb(126, 126, 209);
+            box-sizing: border-box;
+            border-radius: 5px;
+            text-align: center;
+            padding: 15%;
+            background-color: #adaddb;
+            height: 100px;
+            width: 100px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #gameStatus{
+            margin-top: 25px;
+        }
+        #resetGame{
+            cursor: pointer;
+            margin-top: 25px;
+            font-family: cursive;
+            font-size: 2rem;
+            height: auto;
+            width: 150px;
+            border: none;
+            transition: 0.3s;
+        }
+        #resetGame:active{
+            transform: scale(0.8);
+        }
+        #resetGame:hover{
+            background-color: #a0a0c0;
+        }
+    </style>
+</head>
+<body >
+    <div class="gameTitle">Tik Tak Toe</div>
+    <div class="gameContainer">
+        <div class="cellContainer">
+            <div class="cell" cellIndex="0"></div>
+            <div class="cell" cellIndex="1"></div>
+            <div class="cell" cellIndex="2"></div>
+            <div class="cell" cellIndex="3"></div>
+            <div class="cell" cellIndex="4"></div>
+            <div class="cell" cellIndex="5"></div>
+            <div class="cell" cellIndex="6"></div>
+            <div class="cell" cellIndex="7"></div>
+            <div class="cell" cellIndex="8"></div>
+        </div>
+        <div id="gameStatus">
+            Start
+        </div>
+        <button id="resetGame">Reset</button>
+    </div>
+    <script>
+        let gameStatus = document.getElementById("gameStatus");
+        let resetbtn = document.getElementById("resetGame");
+        let cells = document.querySelectorAll(".cell");
+        const winCondition =[
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6]
+    ];
+    let options = ["","","","","","","","",""];
+    let currentPlayer = "X";
+    let running = false;
+    let drawCounter = 0;
+
+    initialiseGame();
+
+    function initialiseGame(){
+        drawCounter = 0;
+        running = true;
+        cells.forEach(cell => {
+            cell.addEventListener("click",cellCliked)
+        });
+        resetbtn.addEventListener("click",resetGame);
+        
+    }
+    function cellCliked(){
+        const cellIndex = this.getAttribute("cellIndex");
+        if(options[cellIndex] != "" || !running){
+            return;
+        }
+        drawCounter++;
+        if(drawCounter < 9){
+            updateCell(this,cellIndex);
+            gameStatus.textContent = `${currentPlayer }'s turn`;
+            checkWinner();
+        }
+        if(drawCounter == 9){
+            checkWinner();
+            updateCell(this,cellIndex);
+            gameStatus.textContent = `Draw`;
+        }
+        
+    }
+    function updateCell(cell,index){
+        options[index] = currentPlayer;
+        cell.textContent = currentPlayer;
+        currentPlayer = (currentPlayer == "X") ? "O": "X";
+    }
+    function checkWinner(){
+        for(let i = 0;i<winCondition.length;i++){
+                let cellA = options[winCondition[i][0]];
+                let cellB = options[winCondition[i][1]];
+                let cellC = options[winCondition[i][2]];
+                if((cellA == "" || cellB == "" || cellC == "")){
+                    continue;
+                }
+                if((cellA == cellB && cellB == cellC) ){
+                    gameStatus.textContent = `${cellA} won..`;
+                    cells.forEach(cell => {
+                        cell.removeEventListener("click",cellCliked)
+                    });
+                    break;
+                }
+               
+        }
+    }
+    function resetGame(){
+        options = ["","","","","","","","",""];
+        gameStatus.textContent = "Start";
+        cells.forEach((cell) => {
+            cell.textContent = ""
+        })
+        initialiseGame();
+    }
+
+    </script>
+</body>
+</html>

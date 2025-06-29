@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <title>Chat Style Media Layout</title>
+    <style>
+        /* Circular images with specific width and height */
+        .media img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Center the title text */
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        /* Chat message styling */
+        .chat-message {
+            background-color: #333;
+            border-radius: 10px;
+            color: white;
+        }
+        
+        /* Right align message content */
+        .media-body {
+            margin-left: 2%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        /* Add some spacing and layout adjustments */
+        .media {
+            padding: 15px;
+            display: flex;
+            flex-direction: row;
+            margin: 15px 0;
+            /* align-items: center; */
+        }
+
+        .username {
+            font-weight: bold;
+            color: #8ecae6;
+        }
+
+        .timestamp {
+            font-size: 0.85em;
+            color: #a1a1a1;
+        }
+    </style>
+</head>
+<body class="bg-dark">
+    <h1 class="my-4">Media Layout</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <ul class="list-unstyled">
+                    <li>
+                        <!-- Main Chat Message -->
+                        <div class="media chat-message">
+                            <img src="./images/2.jpg" alt="User Image align-self-start" class="mr-3">
+                            <div class="media-body">
+                                <span class="username">Person 1</span>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, inventore, iure est accusantium dicta nobis dolorum.</p>
+                                <span class="timestamp">10:30 AM</span>
+                                <!-- Nested Reply Message -->
+                                <div class="media chat-message ml-5">
+                                    <img src="./images/9.jpg" alt="Nested User Image" class="mr-3">
+                                    <div class="media-body">
+                                        <span class="username">Person 2</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis sed quae deleniti quasi recusandae mollitia fugiat deserunt.</p>
+                                        <span class="timestamp">10:32 AM</span>
+                                    </div>
+                                </div>
+                                <!-- Nested Reply Message -->
+                                <div class="media chat-message ml-5">
+                                    <img src="./images/9.jpg" alt="Nested User Image" class="mr-3">
+                                    <div class="media-body">
+                                        <span class="username">Person 2</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis sed quae deleniti quasi recusandae mollitia fugiat deserunt.</p>
+                                        <span class="timestamp">10:32 AM</span>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+
+                        <!-- Nested Reply Message -->
+                        <div class="media chat-message ml-5">
+                            <img src="./images/9.jpg" alt="Nested User Image" class="mr-3">
+                            <div class="media-body">
+                                <span class="username">Person 2</span>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis sed quae deleniti quasi recusandae mollitia fugiat deserunt.</p>
+                                <span class="timestamp">10:32 AM</span>
+                            </div>
+                        </div>
+
+                        <!-- Additional Chat Message -->
+                        <div class="media chat-message">
+                            <img src="./images/2.jpg" alt="User Image" class="mr-3">
+                            <div class="media-body">
+                                <span class="username">Person 1</span>
+                                <p>Quam expedita odit ipsa officiis illo! Facilis soluta, nulla deleniti exercitationem a non beatae?</p>
+                                <span class="timestamp">10:35 AM</span>
+                                 <!-- Nested Reply Message -->
+                                 <div class="media chat-message ml-5">
+                                    <img src="./images/9.jpg" alt="Nested User Image" class="mr-3">
+                                    <div class="media-body">
+                                        <span class="username">Person 2</span>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis sed quae deleniti quasi recusandae mollitia fugiat deserunt.</p>
+                                        <span class="timestamp">10:32 AM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.css" class="">
+    <title>Template7</title>
+    <style>
+    </style>
+</head>
+<body class="bg-dark">
+    <h1 class="my-4 " style="text-align: center; color: white;"> Leaning Media Layout</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <ul class="list-unstyled">
+                    <li>
+                        <div class="media m-3">
+                            <img src="./images/2.jpg" class=""  alt="">
+                            <div class="media-body text-white m-2">
+                                <h2 class="text-center" > Person</h2>
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto, inventore, iure est accusantium dicta, nobis dolorum non quam quaerat aspernatur sed eum! Facilis soluta, nulla deleniti exercitationem a non beatae?</p>
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto, inventore, iure est accusantium dicta, nobis dolorum non quam quaerat aspernatur sed eum! Facilis soluta, nulla deleniti exercitationem a non beatae?</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="media text-white">
+                                            <img src="./images/9.jpg" alt="">
+                                            <div class="media-body">
+                                                <h3>Person</h3>
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo quisquam laboriosam hic! Omnis sed quae deleniti quasi recusandae mollitia fugiat deserunt, non officia corporis. Quam expedita odit ipsa officiis illo!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        
+    </div>
+</body>
+</html> -->

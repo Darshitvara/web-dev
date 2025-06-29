@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Table</title>
+    <style>
+        *::selection{
+            color: rgb(8, 181, 255);
+            background-color: rgb(0, 0, 0);
+        }
+        
+        .table1>tbody>:hover{
+            box-shadow: 3px 3px 10px;
+            /* height: 120px;  */
+        }
+        .table2>tbody>tr>:hover{
+            box-shadow: 3px 3px 10px;
+        }
+        .div-text{
+            float: right;
+            margin-left: 200px;
+            margin-top: 5px;
+        }
+        .table1{
+            height: 500px;
+            width: 1400px;
+            margin-top: 2px;
+            margin-right:  50px ;
+            margin-bottom:  50px;
+            margin-left: 50px;          
+        }
+        .table1.tr{
+            height: 150px;
+        }
+        tbody>tr>:nth-child(1){
+            width: 80px;
+        }
+        tbody>:nth-child(6){
+            height: 60px;
+        }
+        tbody>:nth-child(7){
+            height: 60px;
+        }
+        .table2{
+            margin-top: 30px;
+        }
+        .table2>tbody>tr>:nth-child(even){
+            width: 500px;            
+        }
+        .table2>tbody>tr>:nth-child(odd){
+            width: 100px;            
+        }
+        footer li::after{
+            content: "🐼🐼🐼";
+        }
+        
+        footer li::marker{
+            content: "🐽";
+        }
+        footer{
+            /* display: inline-block; */
+            float: left;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+    <center  > 
+        <h2>L. D. College of Engineering, Ahmdabad - 15</h2>
+        <h3> Computer Engineering Department </h3>
+        <h5>Exam Term Of the Academic Year-2023-2024( Even - 2024)  (Term duration : 01/02/2024 to 25/05/24)</h5>
+        <h5>Class Time Table - BE - SEM IV - CE - DIV - C - WEF :- 01/02/2024 </h5>  
+    </center>
+</header>
+    <hr>
+
+    <main>
+    <p> Room No :-  240 </p>
+    <table class="table1" border="1" > 
+        <tr style="height: 20px;">
+            <th> Time </th>
+            <th> 10 : 30</th>
+            <th>11 : 30</th>
+            <th>1 : 00</th>
+            <th> 2 : 00</th>
+            <th>3 : 15</th>
+            <th>4 : 15</th>
+        </tr>
+        <tr style="height: 20px;" align="center">
+            <td>Day</td>
+            <td>11 : 30</td>
+            <td>12 : 30</td>
+            <td>2 : 00</td>
+            <td>3 : 00</td>
+            <td>4 : 15</td>
+            <td>5 : 15</td>
+        </tr>
+        <tr align="center">
+            <td>Mon</td>
+            <td>COA-C1-ZYN-Lab1 <br>
+                OOP-C2-RJ-Lab5 <br>
+                OS-C3-HAJ-LaB7
+            </td>
+            <td>COA-C1-ZYN-Lab1 <br>
+                OOP-C2-RJ-Lab5 <br>
+                OS-C3-HAJ-LaB7</td>
+            <td>OOP1 <br> BHT</td>
+            <td>OS <br> HDR</td>
+            <td>DM-C1-SBC <br> DM-C2-VF <br> DM-C3</td>
+            <td>DM-C1-SBC <br> DM-C2-CF <br> DM-C3</td>
+        </tr>
+        <tr align="center">
+            <td>Tues</td>
+            <td>COA-C1-ZYN-Lab1 <br>
+                OOP-C2-RJ-Lab5 <br>
+                OS-C3-HAJ-LaB7
+            </td>
+            <td>COA-C1-ZYN-Lab1 <br>
+                OOP-C2-RJ-Lab5 <br>
+                OS-C3-HAJ-LaB7</td>
+                <td style="font-size: 4px;"> 229 </td>
+            <td>OS <br> HDR</td>
+            <td>PEM <br> HAJ </td>
+            <td>PEM <br> TJR</td>
+        </tr>
+        <tr align="center">
+            <td>Wed</td>
+            <td>COA-C1-ZYN-Lab1 <br>
+                OOP-C2-RJ-Lab5 <br>
+                OS-C3-HAJ-LaB7
+            </td>
+            <td>COA-C1-ZYN-Lab1 <br>
+                OOP-C2-RJ-Lab5 <br>
+                OS-C3-HAJ-LaB7</td>
+            <td>OOP1 <br> BHT</td>
+            <td>OS <br> HDR</td>
+            <td>DM <br> SBC </td>
+            <td>DM <br> JSP</td>
+        </tr>
+        <tr align="center">
+            <td>Thurs</td>
+            <td style="font-size: 4px;"> 229 </td>
+            <td>OS <br> HDR</td>
+            <td>OOP1 <br> RJ</td>
+            <td>COA <br> ZYN</td>
+            <td>DM <br> JSP</td>
+            <td style="font-size: 4px;"> 229 </td>
+        </tr>
+        
+        <tr align="center">
+            <td>Fri</td>
+            <td style="font-size: 4px;"> 229 </td>
+                        <td>COA <br> ZYN</td>
+            <td>PEM <br> BHT</td>
+            <td>OOP1 <br>RJ</td>
+            <td>COA <br> PDS</td>
+            <td style="font-size: 4px;"> 229 </td>
+        </tr>
+        <tr align="center">
+            <td>Sat</td>
+            <td>DE-C1 PVP Lab7 <br> DE-C2 PGP Lab8 <br> DE-C3 SRM Lab9</td>
+            <td>DE-C1 PVP Lab7 <br> DE-C2 PGP Lab8 <br> DE-C3 SRM Lab9</td>
+            <td>DE-C1 PVP Lab7 <br> DE-C2 PGP Lab8 <br> DE-C3 SRM Lab9</td>
+            <td>DE-C1 PVP Lab7 <br> DE-C2 PGP Lab8 <br> DE-C3 SRM Lab9</td>
+            <td style="font-size: 4px;"> 229 </td>
+            <td style="font-size: 4px;"> 229 </td>
+        </tr>
+        
+    </table>
+
+    <hr>
+
+    
+    <table class="table2" border="2" style="height: 100px;" align="center">
+        <thead  align="center" style="height: 40px;">
+            <th colspan="4">Lab allocation</th>
+        </thead>
+        <tr align="center" >
+            <td>Lab 1 </td>
+            <td> Application Development Lab</td>
+            <td>Lab 6 </td>
+            <td>Software Development Lab</td>
+        </tr>
+        <tr align="center">
+            <td>Lab 2 </td>
+            <td> Application Development Lab</td>
+            <td>Lab 7 </td>
+            <td>Software Development Lab</td>
+        </tr>
+        <tr align="center">
+            <td>Lab 3 </td>
+            <td> Application Development Lab</td>
+            <td>Lab 8 </td>
+            <td>Software Development Lab</td>
+        </tr>
+        <tr align="center">
+            <td>Lab 4 </td>
+            <td> Application Development Lab</td>
+            <td>Lab 9 </td>
+            <td>Software Development Lab</td>
+        </tr>
+        <tr align="center">
+            <td>Lab 5 </td>
+            <td> Application Development Lab</td>
+            <td>Lab 10 </td>
+            <td>Software Development Lab</td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                2002,2005,2006,2010 - Annexe building Computer Center
+            </td>
+        </tr>
+
+
+    </table>
+    <br>
+    
+</main>
+<footer>
+    <ul>
+    <li class="div-text" > 
+        <p> Time Table Convener <br> CE Department, LDCE</p>
+    </li>
+    <li class="div-text"> 
+       <p> Professor & Head <br> CE Department, LDCE</p>
+   </li>
+   <li class="div-text"> 
+    <p>Principal <br> CE Department, LDCE</p>
+</li>
+</ul>
+</footer>
+        
+
+</body>
+</html>

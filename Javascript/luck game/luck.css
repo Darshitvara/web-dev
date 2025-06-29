@@ -1,0 +1,59 @@
+*{
+    background-color: #000;
+}
+h2,h1{
+    color: white;
+}
+.dicespace{
+    display: flex;
+    justify-content: space-evenly;
+}
+#dicespace1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10em;
+    height: 200px;
+    width: 200px;
+    background-color: white;
+    box-shadow: 5px 5px 20px rgb(45, 45, 45),-8px -8px 20px rgb(45, 45, 45);
+}
+#dicespace2{
+    box-shadow: 5px 5px 20px rgb(45, 45, 45),-8px -8px 20px rgb(45, 45, 45);
+    height: 200px;
+    width: 200px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10em;
+}
+.displayContent{
+    /* display: block; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 50px;
+    color: white;
+    font-size: 4em;
+    /* background-color: aqua; */
+}
+.displayContent input{
+    height: 50px;
+    width: 200px;
+    border-radius: 30px;
+    background-color: rgb(252, 252, 252);
+    font-size: 40px;
+    text-align: center;
+
+}
+.displayContent button{
+    margin-left: 50px;
+    height: 50px;
+    width: 150px;
+    border-radius: 30px;
+    background-color: rgb(252, 252, 252);
+    font-size: 30px;
+    text-align: center;
+}

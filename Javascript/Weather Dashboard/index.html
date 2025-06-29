@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <h1 id="data"></h1>
+
+    <div class="app-wrap">
+        <header>
+          <input type="text" autocomplete="off" class="search-box" placeholder="Search for a city..." />
+        </header>
+        <main>
+          <section class="location">
+            <div class="city"></div>
+            <div class="date"></div>
+          </section>
+          <div class="current">
+            <div class="temp"></div>
+            <div class="weather"></div>
+            <div class="wind-speed"></div>
+            <div class="pressure"></div>
+            <div class="cloudCover"></div>
+          </div>
+        </main>
+    </div>
+</body>
+<script src="script.js">
+
+// const ACCESS_KEY = "10b7f32ad88f84bfd0884ff48f381dfd"
+//     let  pinPoint = "porbandar"
+//     let requestUrl = `http://api.weatherstack.com/current?access_key=${ACCESS_KEY}&query=${pinPoint}`
+//     const options = {
+//         method : "GET"
+//     }
+//     fetchData(requestUrl)
+
+//     async function fetchData(requestUrl){
+//         try{
+//             let response = await fetch(requestUrl,options)  
+//             const responseText = await response.text()      // type object  
+//             document.getElementById("data").innerHTML = String(responseText)
+//             console.log(typeof(responseText)) // String
+//             console.log(responseText)
+//         }
+//         catch(error){
+//             console.log(error);
+//         }
+//     }
+</script>
+</html>

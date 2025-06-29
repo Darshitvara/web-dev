@@ -1,0 +1,81 @@
+Learnt till now
+====== ==== ===
+
+border property - border-style, border-size, border-color
+
+text shadow - horizontal width, vertical width, blur, color
+
+box shadow  - horizontal width, vertical width, blur, color
+
+font family - name of font family 
+	    - also use remote font family from google API ( fonts.google.com ) 
+			- direct copy the link and add into head tag
+			- download offline, extract file and add the .ttl file into the main folder 
+				- create a font-face in css file to enable the remote font-family 
+					- include src with url and name font-family
+
+float - to float the element on page with specific direction
+
+display property - inline(span-height-width can't be applied), block(div), inline-block(h/w can be applied), none(remove the element)
+
+visibility - much like a display-none but it still shows the space.
+
+overflow - property that sets the desired behavior when content does not fit in the parent element box (overflows)
+
+box-sizing - It considers element as single unit instead of calculating size like (size = element size + padding + margin + border )
+
+combinators - explains the relationship between listed selectors
+		- ' ' = descendant 	  (applies changes to all subchilds)
+		- '>' = child		  (applies changes to only immediate subchilds only)
+		- '~' = general siblings  (applies changes to all sibling )
+		- '+' = adjacent siblings (applies changes to immediate sibling only)
+
+psudo classes - selector:hover and selector:active
+
+psudo elements - to select the subpart of element 
+		- selector::psudo-element
+
+awsomefonts.com - plateform for icons.
+
+display: flex 
+		- justify-content : to justify elements on the X-axis 
+		- flex-direction  : to align elements to specific direction
+		- align-items     : to align elements on the Y-axis
+		- flex-wrap		  : to wrap the content in different screen size and maintain the dimensions of elements 
+		- align-content   : used with the flex-wrap property 
+		- column-gap
+		- row-gap
+		
+		element level properties:
+			- align-self
+			- order(Integer value only)
+	
+transform :
+		- translateX - move the element on X axis
+		- translateY - move the element on Y axis
+		- rotatex    - rotates the element on X axis
+		- rotateY    - rotates the element on Y axis
+		- rotateZ    - rotates the element on Z axis
+		- scale      - scales the size of an element
+		- skewX  	 - skews the size of an element on X axis
+		- skewY  	 - skews the size of an element on Y axis
+
+animations in css :
+		- from {} or 100%
+		- to{} or 0%
+
+		- element level properties :
+			- animation-name - to apply the specific animation on the specific element
+			- animation-duration - to set the time for animation
+			- animation-fill-mode - to specify the animation state on animation completion
+			- animation-play-state - running, paused etc
+			- animation-timing-function - ease,linear,steps(), ease-in,ease-in-out etc
+			- animation-direction 
+
+transition - similar to animation but unlike animation transition is easy to use.
+		   - transition effects are visible at the time of hover element
+		   - property duration timing-function delay
+			
+
+
+

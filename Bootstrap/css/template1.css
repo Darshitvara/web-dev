@@ -1,0 +1,255 @@
+a{
+    text-decoration: none;
+}
+.header{
+    background: #1c1b1b;
+    color: white;
+}
+.menu{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+.menu li{
+    display: inline-block;
+}
+.header #logo{
+    font-size: 2rem;
+    margin-top: 5px;
+}
+.header li a{
+    display: block;
+    padding: 15px 10px;
+    color: white;
+}
+.header li a:hover{
+    background-color: #60a3bc;
+    color: white;
+}
+
+.banner{
+    background: url("../images/99.jpg") no-repeat 0 0;
+    background-size: cover;
+    color: white;
+}
+.banner-title{
+    padding: 25vh 1rem;
+}
+.banner-title h1{
+    padding: 10px;
+    margin: 0;
+    font-size: 3rem;
+}
+.banner-title p.lead{
+    padding: 10px;
+}
+
+.section{
+    padding-bottom: 70px;
+    padding-top: 70px;
+}
+.heading{
+    text-align: center;
+    /* color:#3c6382; */
+    margin-bottom: 40px;
+}
+.heading::after{
+    text-align: center;
+    content: "";
+    background-color: #1c1b1b;
+    margin: 20px auto;
+    border-radius: 5px;
+    display: block;
+    width: 200px;
+    height: 5px;
+}
+.section3:hover{
+    .heading::after{
+        width: 25rem;
+        transition-duration: 1500ms;
+        transition-delay: 500ms;
+    }
+}
+.heading p{
+    margin-bottom: 0px;
+    font-weight: bolder;
+    /* text-align: center; */
+    font-size: 3rem;
+}
+.icon{
+    font-size: 4rem;
+    margin: 20px;
+}
+.icon-head{
+    margin-bottom: 5px;
+}
+.service-box{
+    /* box-shadow: 2px 2px 20px black; */
+    text-align: center;
+    padding: 20px;
+}
+.service-box:hover{
+    transition-duration: 1000ms;
+    scale: 1.1;
+}
+
+.testimonials{
+    background: url("../images/banner2.jpg") no-repeat 0 0;
+    background-size: cover;
+    padding: 50px 0px;
+    position: relative;
+    color: white;
+}
+.testimonials:before{
+    color: white;
+    background: rgba(4, 4, 4, 0.5);
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+.testimonials .heading::after{
+    text-align: center;
+    content: "";
+    background-color: #ffffff;
+    margin: 20px auto;
+    border-radius: 5px;
+    display: block;
+    width: 200px;
+    height: 5px;
+}
+.testimonial{
+    margin-bottom: 3%;
+}
+.section4:hover{
+    .heading::after{
+        background-color: white;
+        width: 20rem;
+        transition-duration: 1500ms;
+        transition-delay: 500ms;
+    }
+}
+.section4 img{
+    margin-top: 5%;
+    height: 50%;
+    width: 19%;
+    border-radius: 50%;
+}
+.section4 .section4-names{
+    margin-top: 4%;
+}
+.section4-content{
+    margin-top: 20px;
+    padding: 20px;
+    text-align: center;
+}
+.section5-img{
+    width: 100%;
+    height: 100%;
+    margin-bottom: 3%;
+}
+.news-post{
+    /* box-shadow: 1px 1px 5px black; */
+    padding: 20px;
+}
+.post-date::before{
+    content: "\f073";
+    font-family: FontAwesome;
+    font-size: large;
+    margin-right: 2%;
+}
+.arrow::after{
+    content:"\f101";
+    font-family: FontAwesome;
+    font-size: large;
+    margin-left:2%;
+}
+.section6{
+    background-color: #353557;
+}
+.section6-heading{
+    color: white;
+    font-size: 1.5rem;
+    margin-left: 20%;
+
+}
+.section6-heading:after{
+    content: "";
+    display: block;
+    background-color: white;
+    width: 30%;
+    height: 5px;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+.detail1:hover{
+    .detail1-heading:after{
+        margin-left: 35px;
+        margin-top: 5px;
+        text-align: center;
+        transition-duration: 1500ms;
+    }
+}
+.detail2:hover{
+    .detail2-heading:after{
+        margin-left: 35px;
+        margin-top: 5px;
+        text-align: center;
+        transition-duration: 1500ms;
+    }
+}
+.detail3:hover{
+    .detail3-heading:after{
+        margin-left: 35px;
+        margin-top: 5px;
+        text-align: center;
+        transition-duration: 1500ms;
+    }
+}
+.section6 .detail1 p{
+    color: white;
+    margin-top: 20px;
+}
+.detail2 ul{
+    margin-top: 5%;
+}
+.news-item{
+    list-style: none;
+    color:white;
+
+}
+.news-item::before{
+    content:"\f101";
+    font-family: FontAwesome;
+    font-size: large;
+    margin-right:2%;
+}
+.detail3 address{
+    text-align: center;
+    margin-top: 5%;
+    color: white;
+}
+footer{
+    background: #1a1a46;
+    color: white;
+    font-size: 30px;
+}
+footer li{
+    list-style: none;
+    margin-left: 5%;
+    margin-top: 10px;
+    float: right;
+    /* display: inline-block; */
+}
+footer li:hover{
+    scale: 1.2;
+    transition-duration: 500ms;
+
+}
+footer b{
+    font-size: 1.5rem;
+    margin-left: 5%;
+    margin-top: 10px;
+}

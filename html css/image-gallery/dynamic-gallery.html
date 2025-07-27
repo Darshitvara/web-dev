@@ -301,67 +301,48 @@
             return link;
         }
         
-        // Function to preload image and return promise
-        function preloadImage(src) {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                img.onload = () => resolve(img);
-                img.onerror = reject;
-                img.src = src;
-            });
-        }
-        
         // Function to create image element with Pinterest styling and smooth loading
-        async function createImageElement(imageUrl, alt = '', description = '', targetHeight = null) {
+        function createImageElement(imageUrl, alt = '', description = '', targetHeight = null) {
             const height = targetHeight || getRandomHeight();
             
-            // Create skeleton first
-            const skeleton = createSkeletonElement(height);
+            // Create the actual image element
+            const link = document.createElement('a');
+            link.target = '_blank';
+            link.href = imageUrl;
+            link.className = 'image-item';
             
-            try {
-                // Preload the image
-                const preloadedImg = await preloadImage(imageUrl);
-                
-                // Create the actual image element
-                const link = document.createElement('a');
-                link.target = '_blank';
-                link.href = imageUrl;
-                link.className = 'image-item';
-                
-                const img = document.createElement('img');
-                img.src = imageUrl;
-                img.alt = alt;
-                img.loading = 'lazy';
-                
-                // Create overlay for hover effect
-                const overlay = document.createElement('div');
-                overlay.className = 'image-overlay';
-                
-                if (description) {
-                    const info = document.createElement('div');
-                    info.className = 'image-info';
-                    info.textContent = description;
-                    overlay.appendChild(info);
-                }
-                
-                link.appendChild(img);
-                link.appendChild(overlay);
-                
-                // Replace skeleton with actual image smoothly
-                if (skeleton.parentElement) {
-                    skeleton.parentElement.replaceChild(link, skeleton);
-                    // Trigger smooth fade in
-                    setTimeout(() => link.classList.add('loaded'), 50);
-                }
-                
-                return link;
-            } catch (error) {
-                // If image fails to load, remove skeleton
-                if (skeleton.parentElement) {
-                    skeleton.remove();
-                }
-                throw error;
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = alt;
+            img.loading = 'lazy';
+            
+            // Add error handling for failed image loads
+            img.onerror = function() {
+                console.log('Failed to load image:', imageUrl);
+                this.parentElement.remove();
+            };
+            
+            // Add load success handler
+            img.onload = function() {
+                // Trigger smooth fade in
+                setTimeout(() => link.classList.add('loaded'), 50);
+            };
+            
+            // Create overlay for hover effect
+            const overlay = document.createElement('div');
+            overlay.className = 'image-overlay';
+            
+            if (description) {
+                const info = document.createElement('div');
+                info.className = 'image-info';
+                info.textContent = description;
+                overlay.appendChild(info);
             }
+            
+            link.appendChild(img);
+            link.appendChild(overlay);
+            
+            return link;
         }
         
         // Function to load images using Unsplash API with smooth loading
@@ -401,28 +382,16 @@
                 const data = await response.json();
                 
                 if (data.results && data.results.length > 0) {
-                    // First, add skeleton placeholders
-                    const skeletons = [];
-                    data.results.forEach(() => {
-                        const height = getRandomHeight();
-                        const skeleton = createSkeletonElement(height);
-                        gallery.appendChild(skeleton);
-                        skeletons.push({ skeleton, height });
-                    });
-                    
-                    // Then load images progressively
-                    data.results.forEach(async (photo, index) => {
-                        try {
-                            await new Promise(resolve => setTimeout(resolve, index * 50)); // Stagger loading
-                            await createImageElement(
+                    // Load images directly without skeletons for now
+                    data.results.forEach((photo, index) => {
+                        setTimeout(() => {
+                            const imageElement = createImageElement(
                                 photo.urls.regular,
                                 photo.alt_description || 'Unsplash image',
-                                photo.user?.name ? `Photo by ${photo.user.name}` : '',
-                                skeletons[index]?.height
+                                photo.user?.name ? `Photo by ${photo.user.name}` : ''
                             );
-                        } catch (err) {
-                            console.log('Failed to load image:', err);
-                        }
+                            gallery.appendChild(imageElement);
+                        }, index * 100); // Stagger loading
                     });
                     
                     currentPage++;
@@ -450,7 +419,8 @@
         }
         
         // Fallback function using Lorem Picsum with smooth loading
-        async function loadImagesFromPicsum(append = false) {
+        function loadImagesFromPicsum(append = false) {
+            console.log('Loading from Picsum, append:', append);
             if (isLoading) return;
             
             const gallery = document.getElementById('gallery');
@@ -474,53 +444,42 @@
             }
             error.style.display = 'none';
             
-            try {
-                const imageCount = 20;
-                const skeletons = [];
-                
-                // First, add skeleton placeholders
-                for (let i = 0; i < imageCount; i++) {
+            const imageCount = 12; // Reduced for faster loading
+            
+            // Load images directly
+            for (let i = 0; i < imageCount; i++) {
+                setTimeout(() => {
+                    const randomId = Math.floor(Math.random() * 1000) + (currentPage - 1) * imageCount + i;
                     const height = getRandomHeight();
-                    const skeleton = createSkeletonElement(height);
-                    gallery.appendChild(skeleton);
-                    skeletons.push({ skeleton, height });
-                }
-                
-                // Then load images progressively
-                for (let i = 0; i < imageCount; i++) {
-                    try {
-                        await new Promise(resolve => setTimeout(resolve, i * 50)); // Stagger loading
-                        const randomId = Math.floor(Math.random() * 1000) + (currentPage - 1) * imageCount + i;
-                        const imageUrl = `https://picsum.photos/400/${skeletons[i].height}?random=${randomId}`;
-                        
-                        await createImageElement(
-                            imageUrl,
-                            `Random image ${randomId}`,
-                            `Beautiful random image`,
-                            skeletons[i].height
-                        );
-                    } catch (err) {
-                        console.log('Failed to load image:', err);
-                    }
-                }
-                
-                currentPage++;
-            } catch (err) {
-                console.error('Error loading images:', err);
-                error.textContent = 'Failed to load images. Please try again.';
-                error.style.display = 'block';
-                hasMoreImages = false;
-            } finally {
+                    const imageUrl = `https://picsum.photos/400/${height}?random=${randomId}`;
+                    
+                    console.log('Creating image:', imageUrl);
+                    const imageElement = createImageElement(
+                        imageUrl,
+                        `Random image ${randomId}`,
+                        `Beautiful random image`
+                    );
+                    gallery.appendChild(imageElement);
+                    console.log('Image added to gallery');
+                }, i * 200); // Slower stagger for debugging
+            }
+            
+            currentPage++;
+            
+            // Clean up loading state
+            setTimeout(() => {
                 isLoading = false;
                 loading.style.display = 'none';
                 infiniteLoading.classList.remove('show');
-            }
+                console.log('Loading completed');
+            }, imageCount * 200 + 1000);
         }
         
         // Main load images function
-        async function loadImages(append = false) {
-            // Try Unsplash first, fallback to Picsum
-            await loadImagesFromUnsplash(append);
+        function loadImages(append = false) {
+            console.log('Loading images, append:', append);
+            // Use Picsum directly for now (more reliable)
+            loadImagesFromPicsum(append);
         }
         
         // Function to load more images (for manual trigger)
@@ -564,7 +523,18 @@
         
         // Load initial images when page loads
         window.addEventListener('load', () => {
+            console.log('Page loaded, starting to load images...');
             loadImages();
+        });
+        
+        // Fallback in case load event doesn't fire
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, starting to load images...');
+            setTimeout(() => {
+                if (document.getElementById('gallery').children.length === 0) {
+                    loadImages();
+                }
+            }, 1000);
         });
         
         // Add infinite scroll listener

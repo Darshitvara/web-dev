@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Dynamic Image Gallery</title>
+    <style>
+        /* Override the original gallery styles for Pinterest layout */
+        .gallery {
+            column-count: 4;
+            column-gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery a {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 20px;
+            break-inside: avoid;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .gallery a.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gallery a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .gallery img {
+            width: 100% !important;
+            height: auto !important;
+            border: none !important;
+            border-radius: 15px;
+            margin: 0 !important;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+        
+        .gallery img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Skeleton loading placeholder */
+        .image-skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 15px;
+            min-height: 200px;
+        }
+        
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+        
+        /* Smooth loading indicator at bottom */
+        .infinite-loading {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .infinite-loading.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .infinite-loading::after {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 2px solid #fff;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        /* Responsive columns */
+        @media (max-width: 1200px) {
+            .gallery {
+                column-count: 3;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .gallery {
+                column-count: 2;
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .gallery {
+                column-count: 1;
+                padding: 10px;
+            }
+        }
+        
+        .loading {
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            margin: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        
+        .controls button {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 8px 4px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .controls button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .controls input {
+            padding: 12px 20px;
+            margin: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            width: 300px;
+            transition: all 0.3s ease;
+        }
+        
+        .controls input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .controls input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .error {
+            color: #ff6b6b;
+            text-align: center;
+            font-size: 18px;
+            margin: 20px;
+            padding: 15px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        .image-item {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 15px;
+        }
+        
+        .image-item:hover .image-overlay {
+            opacity: 1;
+        }
+        
+        .image-info {
+            color: white;
+            font-size: 14px;
+        }
+        
+        /* Fade in animation for new images */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 align="center">Dynamic Image Gallery</h1>
+    
+    <div class="controls">
+        <input type="text" id="searchQuery" placeholder="Search for images (e.g., nature, cats, cars)" value="nature">
+        <button onclick="loadImages()">🔍 Search</button>
+    </div>
+    
+    <div class="loading" id="loading" style="display: none;">Loading images...</div>
+    <div class="error" id="error" style="display: none;"></div>
+    <div class="infinite-loading" id="infiniteLoading">Loading more images...</div>
+    
+    <div class="gallery" id="gallery">
+        <!-- Dynamic images will be loaded here -->
+    </div>
+
+    <script>
+        const UNSPLASH_ACCESS_KEY = '_MKcij7rDMVXcALap59DJTiq8tKT9WGuyK9Rwevyhd8';
+        const UNSPLASH_API_URL = 'https://api.unsplash.com/search/photos';
+        let currentPage = 1;
+        let currentQuery = 'nature';
+        let isLoading = false;
+        let hasMoreImages = true;
+        
+        // Function to get random height for Pinterest-style layout
+        function getRandomHeight() {
+            const heights = [200, 250, 300, 350, 400, 450];
+            return heights[Math.floor(Math.random() * heights.length)];
+        }
+        
+        // Function to create skeleton placeholder
+        function createSkeletonElement(height) {
+            const link = document.createElement('a');
+            link.className = 'image-skeleton';
+            link.style.height = height + 'px';
+            link.style.minHeight = height + 'px';
+            return link;
+        }
+        
+        // Function to preload image and return promise
+        function preloadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
+        
+        // Function to create image element with Pinterest styling and smooth loading
+        async function createImageElement(imageUrl, alt = '', description = '', targetHeight = null) {
+            const height = targetHeight || getRandomHeight();
+            
+            // Create skeleton first
+            const skeleton = createSkeletonElement(height);
+            
+            try {
+                // Preload the image
+                const preloadedImg = await preloadImage(imageUrl);
+                
+                // Create the actual image element
+                const link = document.createElement('a');
+                link.target = '_blank';
+                link.href = imageUrl;
+                link.className = 'image-item';
+                
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = alt;
+                img.loading = 'lazy';
+                
+                // Create overlay for hover effect
+                const overlay = document.createElement('div');
+                overlay.className = 'image-overlay';
+                
+                if (description) {
+                    const info = document.createElement('div');
+                    info.className = 'image-info';
+                    info.textContent = description;
+                    overlay.appendChild(info);
+                }
+                
+                link.appendChild(img);
+                link.appendChild(overlay);
+                
+                // Replace skeleton with actual image smoothly
+                if (skeleton.parentElement) {
+                    skeleton.parentElement.replaceChild(link, skeleton);
+                    // Trigger smooth fade in
+                    setTimeout(() => link.classList.add('loaded'), 50);
+                }
+                
+                return link;
+            } catch (error) {
+                // If image fails to load, remove skeleton
+                if (skeleton.parentElement) {
+                    skeleton.remove();
+                }
+                throw error;
+            }
+        }
+        
+        // Function to load images using Unsplash API with smooth loading
+        async function loadImagesFromUnsplash(append = false) {
+            if (isLoading) return;
+            
+            const gallery = document.getElementById('gallery');
+            const loading = document.getElementById('loading');
+            const infiniteLoading = document.getElementById('infiniteLoading');
+            const error = document.getElementById('error');
+            const searchQuery = document.getElementById('searchQuery').value.trim() || 'nature';
+            
+            if (!append) {
+                gallery.innerHTML = '';
+                currentPage = 1;
+                currentQuery = searchQuery;
+                hasMoreImages = true;
+            }
+            
+            isLoading = true;
+            
+            // Show appropriate loading indicator
+            if (append) {
+                infiniteLoading.classList.add('show');
+            } else {
+                loading.style.display = 'block';
+            }
+            error.style.display = 'none';
+            
+            try {
+                const response = await fetch(`${UNSPLASH_API_URL}?query=${encodeURIComponent(currentQuery)}&page=${currentPage}&per_page=20&client_id=${UNSPLASH_ACCESS_KEY}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.results && data.results.length > 0) {
+                    // First, add skeleton placeholders
+                    const skeletons = [];
+                    data.results.forEach(() => {
+                        const height = getRandomHeight();
+                        const skeleton = createSkeletonElement(height);
+                        gallery.appendChild(skeleton);
+                        skeletons.push({ skeleton, height });
+                    });
+                    
+                    // Then load images progressively
+                    data.results.forEach(async (photo, index) => {
+                        try {
+                            await new Promise(resolve => setTimeout(resolve, index * 50)); // Stagger loading
+                            await createImageElement(
+                                photo.urls.regular,
+                                photo.alt_description || 'Unsplash image',
+                                photo.user?.name ? `Photo by ${photo.user.name}` : '',
+                                skeletons[index]?.height
+                            );
+                        } catch (err) {
+                            console.log('Failed to load image:', err);
+                        }
+                    });
+                    
+                    currentPage++;
+                    
+                    if (data.results.length < 20) {
+                        hasMoreImages = false;
+                    }
+                } else {
+                    hasMoreImages = false;
+                    if (currentPage === 1) {
+                        error.textContent = 'No images found for this search term.';
+                        error.style.display = 'block';
+                    }
+                }
+            } catch (err) {
+                console.error('Error loading images:', err);
+                // Fallback to Lorem Picsum if Unsplash fails
+                loadImagesFromPicsum(append);
+                return;
+            } finally {
+                isLoading = false;
+                loading.style.display = 'none';
+                infiniteLoading.classList.remove('show');
+            }
+        }
+        
+        // Fallback function using Lorem Picsum with smooth loading
+        async function loadImagesFromPicsum(append = false) {
+            if (isLoading) return;
+            
+            const gallery = document.getElementById('gallery');
+            const loading = document.getElementById('loading');
+            const infiniteLoading = document.getElementById('infiniteLoading');
+            const error = document.getElementById('error');
+            
+            if (!append) {
+                gallery.innerHTML = '';
+                currentPage = 1;
+                hasMoreImages = true;
+            }
+            
+            isLoading = true;
+            
+            // Show appropriate loading indicator
+            if (append) {
+                infiniteLoading.classList.add('show');
+            } else {
+                loading.style.display = 'block';
+            }
+            error.style.display = 'none';
+            
+            try {
+                const imageCount = 20;
+                const skeletons = [];
+                
+                // First, add skeleton placeholders
+                for (let i = 0; i < imageCount; i++) {
+                    const height = getRandomHeight();
+                    const skeleton = createSkeletonElement(height);
+                    gallery.appendChild(skeleton);
+                    skeletons.push({ skeleton, height });
+                }
+                
+                // Then load images progressively
+                for (let i = 0; i < imageCount; i++) {
+                    try {
+                        await new Promise(resolve => setTimeout(resolve, i * 50)); // Stagger loading
+                        const randomId = Math.floor(Math.random() * 1000) + (currentPage - 1) * imageCount + i;
+                        const imageUrl = `https://picsum.photos/400/${skeletons[i].height}?random=${randomId}`;
+                        
+                        await createImageElement(
+                            imageUrl,
+                            `Random image ${randomId}`,
+                            `Beautiful random image`,
+                            skeletons[i].height
+                        );
+                    } catch (err) {
+                        console.log('Failed to load image:', err);
+                    }
+                }
+                
+                currentPage++;
+            } catch (err) {
+                console.error('Error loading images:', err);
+                error.textContent = 'Failed to load images. Please try again.';
+                error.style.display = 'block';
+                hasMoreImages = false;
+            } finally {
+                isLoading = false;
+                loading.style.display = 'none';
+                infiniteLoading.classList.remove('show');
+            }
+        }
+        
+        // Main load images function
+        async function loadImages(append = false) {
+            // Try Unsplash first, fallback to Picsum
+            await loadImagesFromUnsplash(append);
+        }
+        
+        // Function to load more images (for manual trigger)
+        function loadMoreImages() {
+            if (hasMoreImages && !isLoading) {
+                loadImages(true);
+            }
+        }
+        
+        // Infinite scroll functionality with improved smoothness
+        function handleInfiniteScroll() {
+            const scrollHeight = document.documentElement.scrollHeight;
+            const scrollTop = document.documentElement.scrollTop;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            // Load more images when user is 400px from bottom (increased for smoother experience)
+            if (scrollTop + clientHeight >= scrollHeight - 400 && hasMoreImages && !isLoading) {
+                loadMoreImages();
+            }
+        }
+        
+        // Throttle function to limit scroll event frequency
+        function throttle(func, delay) {
+            let timeoutId;
+            let lastExecTime = 0;
+            return function (...args) {
+                const currentTime = Date.now();
+                
+                if (currentTime - lastExecTime > delay) {
+                    func.apply(this, args);
+                    lastExecTime = currentTime;
+                } else {
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(() => {
+                        func.apply(this, args);
+                        lastExecTime = Date.now();
+                    }, delay - (currentTime - lastExecTime));
+                }
+            };
+        }
+        
+        // Load initial images when page loads
+        window.addEventListener('load', () => {
+            loadImages();
+        });
+        
+        // Add infinite scroll listener
+        window.addEventListener('scroll', throttle(handleInfiniteScroll, 200));
+        
+        // Allow searching by pressing Enter
+        document.getElementById('searchQuery').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loadImages();
+            }
+        });
+        
+        // Add smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+    </script>
+</body>
+</html>
